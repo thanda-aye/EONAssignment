@@ -1,0 +1,129 @@
+﻿@model EONAssignmentProj.Models.UserTbl
+@{
+    ViewData["Title"] = "Registration Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/jquery-ui.css" />
+@*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/jquery.datetimepicker.css" />*@
+@*<script src="~/lib/jquery/dist/jquery.datetimepicker.full.min.js"></script>*@
+@*<script src="~/lib/jquery/dist/jquery-3.6.0.js"></script>*@
+ 
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery-1.12.4.js"></script>
+<script src="~/lib/jquery/dist/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $("#rdoMale").change(function () {
+            if ($("#rdoMale").is(":checked")) {
+                $("#rdoFemale").prop("checked", false);
+            }
+        });
+        $("#rdoFemale").change(function () {
+            if ($("#rdoFemale").is(":checked")) {
+                $("#rdoMale").prop("checked", false);
+            }
+        });
+        
+
+        $('input[type="checkbox"]').change(function () {
+            var selectDays = [];
+            $.each($("input[name='SelectedDays']:checked"), function () {
+                selectDays.push($(this).val());
+            });
+            $("#setDays").val(selectDays);
+         
+        });
+
+        $('input[type="date"]').change(function () {
+            var value = this.value;
+            $("#hiddate").val(value);
+
+             $.ajax({
+                url: '@Url.Content("~/User/ConsumeExternalAPI")',
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify(),
+                success: function (result) {
+                    
+                }
+            });
+        });         
+        
+        
+    //    $("#RegDate").datepicker();
+    //    var getdate = $("#RegDate").val();
+    //    alert(getdate);
+    });
+</script>
+
+<div class="d-flex justify-content-center mt-3" style="font-family:Cambria;color: #61500b;">
+    <h4>Registration Form</h4>
+</div>
+
+
+<div class="container">
+    <form asp-controller="User" asp-action="Create" method="post" enctype="multipart/form-data" id="RegForm">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <label class="col-3 text-right">Name</label>
+            <input asp-for="Name" class="col-4 form-control" type="text" autocomplete="off" placeholder="Name" id="Name" />
+            <span asp-validation-for="Name" class="col-5 text-danger"></span>
+        </div><br />
+        <div class="row">
+            <label class="col-3 text-right">Email</label>
+            <input asp-for="Email" class="col-4 form-control" type="text" autocomplete="off" placeholder="Email" id="Email" />
+            <span asp-validation-for="Email" class="col-5 text-danger"></span>
+        </div><br>
+        <div class="row">
+            <label class="col-3 text-right">Gender</label>
+            <div class="col-2 align-bottom">
+                <input asp-for="Gender" type="radio" id="rdoMale" name="Gender" value="Male" class="col-1 text-right">
+                <label for="rdoMale" class="col-1 text-left">Male</label>
+            </div>
+            <div class="col-3 align-bottom">
+                <input asp-for="Gender" type="radio" id="rdoFemale" name="Gender" value="Famale" class="col-1 text-right">
+                <label for="rdoFmale" class="col-2 text-left">Famale</label>
+            </div>
+        </div><br />
+        <div class="row">
+            <label class="col-3 text-right">Date <br />Registered</label>
+            <input asp-for="DateReg" type="date" id="RegDate" name="DateReg" placeholder="" autocomplete="off" class="col-4 form-control" />
+            <span asp-validation-for="DateReg" class="col-5 text-danger"></span>
+        </div><br />
+        <div class="row" id="divddl" name="divddl">               
+        </div><br />
+        <div class="row">
+            <label class="col-3 text-right">Selected <br />Days</label>
+            <div class="col-5 align-bottom">
+                <input asp-for="SelectedDays" type="checkbox" id="chkDay1" name="SelectedDays" value="Day 1" class="col-1 text-right">
+                <label for="chkDay1" class="col-2 text-left">Day 1</label>
+                <input asp-for="SelectedDays" type="checkbox" id="chkDay2" name="SelectedDays" value="Day 2" class="col-1 text-right">
+                <label for="chkDay2" class="col-2 text-left">Day 2</label><br />
+                <input asp-for="SelectedDays" type="checkbox" id="chkDay3" name="SelectedDays" value="Day 3" class="col-1 text-right">
+                <label for="chkDay3" class="col-2 text-left">Day 3</label>
+            </div>
+            <span asp-validation-for="SelectedDays" class="col-5 text-danger"></span>
+        </div><br />
+        <div class="row">
+            <label class="col-3 text-right">Additional<br />Request</label>
+            <textarea asp-for="AddRequest" class="col-4 form-control" type="text" autocomplete="off" placeholder="" maxlength="100"></textarea>
+            <span asp-validation-for="AddRequest" class="col-5 text-danger"></span>
+        </div><br />
+        <div class="row">
+            <div class="col-12 text-center">
+                <input type="hidden" name="setDays" id="setDays" />
+                <input class="btn btn-info " type="submit" value="Submit" id="btnSubmit" name="btnSubmit" />
+            </div>
+        </div>
+    </form>
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

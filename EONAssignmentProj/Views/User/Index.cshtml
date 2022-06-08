@@ -1,0 +1,142 @@
+﻿@model IEnumerable<EONAssignmentProj.Models.UserTbl>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/jquery-ui.css" />
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery-1.12.4.js"></script>
+<script src="~/lib/jquery/dist/jquery-ui.js"></script>
+
+<h5 class="text-center">Registration Form List</h5>
+
+<p style="text-align:right;margin-right:20px;">
+    <a class="btn btn-outline-primary" asp-action="Create">Create New</a>
+</p>
+<div class="table-responsive">
+    @if (Model.Count() > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Gender)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateReg)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AreaOfInterest)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SelectedDays)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AddRequest)
+                    </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateReg)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AreaOfInterest)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SelectedDays)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AddRequest)
+                    </td>
+                    @*<td class="text-center">
+            <a asp-action="Edit" class="btn btn-outline-primary" asp-route-Id="item.Id">Edit</a>
+        </td>
+        <td class="text-center">
+            <a asp-action="Details" class="btn btn-outline-info" asp-route-Id="@item.Id">Details</a>
+        </td>
+        <td class="text-center">
+            <a asp-action="Delete" class="btn btn-outline-danger" asp-route-Id="@item.Id">Delete</a>
+        </td>*@
+                </tr>
+                }
+            </tbody>
+
+        </table>
+    }
+    else
+    {
+        <h6><b>There is no user to display.</b></h6>
+    }
+</div>
+
+<!-----<table class="table table-striped table-bordered table-hover"
+               id="TableId"
+               cellspacing="0"
+               align="center"
+               width="100%">
+        </table>>
+@section Scripts {
+   /* <script>
+        $(function () {
+            loadData();
+        })
+        function loadData() {
+            $.ajax({
+                url: 'https://localhost:44323/api/UserListapi/GetUsers',
+                type: "GET",
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json",
+                success: function (result) {
+                    alert(result);
+                    var html = '';
+                    $.each(result, function (key, item) {
+                        html += '<tr>';
+                        html += '<td>' + item.Name + '</td>';
+                        html += '<td>' + item.Email + '</td>';
+                        html += '<td>' + item.Gender + '</td>';
+                        html += '<td>' + item.DateReg + '</td>';
+                        html += '<td>' + item.AreaOfInterest + '</td>';
+                        html += '<td>' + item.SelectedDays + '</td>';
+                        html += '<td>' + item.AddRequest + '</td>';
+                        html += '<td><a href="#" onclick="return Edit(' + item.id + ')">Edit</a> | <a href="#" onclick="Delete(' + item.id + ')">Delete</a></td>';
+                        html += '</tr>';
+                    });
+                    $('.tbody').html(html);
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+    </script>*/
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

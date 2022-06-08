@@ -1,0 +1,114 @@
+﻿@model EONAssignmentProj.Models.UserTbl
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex justify-content-center mt-3" style="font-family:Cambria;color: #61500b;">
+    <h4>Registration Form Details</h4>
+</div>
+
+
+<div class="container">
+
+    <div class="container">
+        <form asp-controller="User" asp-action="Details" method="post" enctype="multipart/form-data" id="RegForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="row">
+                <label class="col-3 text-right">Name</label>
+                <input class="col-4 form-control" type="text" autocomplete="off" placeholder="Name" value="@Model.Name" readonly />
+            </div><br />
+            <div class="row">
+                <label class="col-3 text-right">Email</label>
+                <input class="col-4 form-control" type="text" autocomplete="off" placeholder="Email" value="@Model.Email" readonly />
+            </div><br>
+            <div class="row">
+                <label class="col-3 text-right">Gender</label>
+                @if (Model.Gender == "M")
+                {
+                    <div class="col-2 align-bottom">
+                        <input type="radio" id="rdoMale" name="nMale" value="Male" class="col-1 text-right" checked>
+                        <label for="rdoMale" class="col-1 text-left">Male</label>
+                    </div>
+                    <div class="col-3 align-bottom">
+                        <input type="radio" id="rdoFamale" name="nFamale" value="Famale" class="col-1 text-right">
+                        <label for="rdoFmale" class="col-2 text-left">Famale</label>
+                    </div>
+                }
+                @if (Model.Gender == "F")
+                {
+                    <div class="col-2 align-bottom">
+                        <input type="radio" id="rdoMale" name="nMale" value="Male" class="col-1 text-right">
+                        <label for="rdoMale" class="col-1 text-left">Male</label>
+                    </div>
+                    <div class="col-3 align-bottom">
+                        <input type="radio" id="rdoFamale" name="nFamale" value="Famale" class="col-1 text-right" checked>
+                        <label for="rdoFmale" class="col-2 text-left">Famale</label>
+                    </div>
+                }
+            </div><br />
+            <div class="row">
+                <label class="col-3 text-right">Date <br />Registered</label>
+                <input type="text" id="RegDate" name="RegDate" placeholder="" autocomplete="off" class="col-4 form-control" value="@Model.DateReg" readonly />
+            </div><br />
+            @{
+
+                string[] getdays = Model.SelectedDays.Split(",");
+                foreach (string getday in getdays)
+                    if (getday == "Day 1")
+                    {
+                        <input asp-for="SelectedDays" type="checkbox" id="chkDay1" name="SelectedDays" value="Day 1" class="col-1 text-right" checked>
+                        <label for="chkDay1" class="col-2 text-left">Day 1</label>
+                        <input asp-for="SelectedDays" type="checkbox" id="chkDay2" name="SelectedDays" value="Day 2" class="col-1 text-right">
+                        <label for="chkDay2" class="col-2 text-left">Day 2</label><br />
+                        <input asp-for="SelectedDays" type="checkbox" id="chkDay3" name="SelectedDays" value="Day 3" class="col-1 text-right">
+                        <label for="chkDay3" class="col-2 text-left">Day 3</label>
+                    }
+                    else if (getday == "Day 2")
+                    {
+                        <input asp-for="SelectedDays" type="checkbox" id="chkDay2" name="SelectedDays" value="Day 2" class="col-1 text-right" checked>
+                        <label for="chkDay2" class="col-2 text-left">Day 2</label><br />
+                        <input asp-for="SelectedDays" type="checkbox" id="chkDay1" name="SelectedDays" value="Day 1" class="col-1 text-right">
+                        <label for="chkDay2" class="col-2 text-left">Day 1</label><br />
+                        <input asp-for="SelectedDays" type="checkbox" id="chkDay3" name="SelectedDays" value="Day 3" class="col-1 text-right">
+                        <label for="chkDay3" class="col-2 text-left">Day 3</label>
+                    }
+                    else if (getday == "Day 3")
+                    {
+                        <input asp-for="SelectedDays" type="checkbox" id="chkDay3" name="SelectedDays" value="Day 3" class="col-1 text-right" checked>
+                        <label for="chkDay3" class="col-2 text-left">Day 3</label>
+                        <input asp-for="SelectedDays" type="checkbox" id="chkDay1" name="SelectedDays" value="Day 1" class="col-1 text-right">
+                        <label for="chkDay2" class="col-2 text-left">Day 1</label><br />
+                        <input asp-for="SelectedDays" type="checkbox" id="chkDay2" name="SelectedDays" value="Day 2" class="col-1 text-right">
+                        <label for="chkDay3" class="col-2 text-left">Day 2</label>
+                    }
+                    
+                    }
+            }
+            <div class="row">
+                <label class="col-3 text-right">Selected <br />Days</label>
+                <div class="col-5 align-bottom">
+
+
+                </div>
+            </div><br />
+            <div class="row">
+                <label class="col-3 text-right">Additional<br />Request</label>
+                <textarea class="col-4 form-control" type="text" autocomplete="off" placeholder="" maxlength="100" readonly>@Model.AddRequest</textarea>
+            </div><br />
+            <div class="row">
+                <div class="col-12 text-center">
+                    <input class="btn-info" type="submit" value="Edit" id="btnSubmit" name="btnSubmit" />
+                    <input class="btn-danger" type="submit" value="Back" id="btnBack" name="btnBack" />
+                </div>
+            </div>
+        </form>
+</div>
+            
+
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

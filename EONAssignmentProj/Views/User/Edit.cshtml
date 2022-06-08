@@ -1,0 +1,89 @@
+﻿@model IEnumerable<EONAssignmentProj.Models.UserTbl>
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex justify-content-center mt-3" style="font-family:Cambria;color: #61500b;">
+    <h4>Edit Registration Form</h4>
+</div>
+
+
+<div class="container">
+    @using (Html.BeginForm("User", "Edit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+    <div>
+        @foreach (var item in Model)
+        {
+            <div class="row">
+                <label class="col-3 text-right">Name</label>
+                <input class="col-4 form-control" type="text" autocomplete="off" placeholder="Name" value="@item.Name" />
+                <span asp-validation-for="@item.Name" class="col-5 text-danger"></span>
+            </div><br />
+            <div class="row">
+                <label class="col-3 text-right">Email</label>
+                <input class="col-4 form-control" type="text" autocomplete="off" placeholder="Email" value="@item.Email" />
+                <span asp-validation-for="@item.Email" class="col-5 text-danger"></span>
+            </div><br>
+            <div class="row">
+                <label class="col-3 text-right">Gender</label>
+                @if (item.Gender == "M")
+                {
+                    <div class="col-2 align-bottom">
+                        <input type="radio" id="rdoMale" name="nMale" value="Male" class="col-1 text-right" checked>
+                        <label for="rdoMale" class="col-1 text-left">Male</label>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="col-3 align-bottom">
+                        <input type="radio" id="rdoFamale" name="nFamale" value="Famale" class="col-1 text-right">
+                        <label for="rdoFmale" class="col-2 text-left">Famale</label>
+                    </div>
+                }
+            </div><br />
+            <div class="row">
+                <label class="col-3 text-right">Date <br />Registered</label>
+                <input type="text" id="RegDate" name="RegDate" placeholder="" autocomplete="off" class="col-4 form-control" value="@item.DateReg" />
+                <span asp-validation-for="@item.DateReg" class="col-5 text-danger"></span>
+            </div><br />
+
+            <div class="row">
+                <label class="col-3 text-right">Selected <br />Days</label>
+                <div class="col-5 align-bottom">
+                    <input type="checkbox" id="chkDay1" name="chkDay1" value="Day 1" class="col-1 text-right">
+                    <label for="chkDay1" class="col-2 text-left">Day 1</label>
+                    <input type="checkbox" id="chkDay2" name="chkDay2" value="Day 2" class="col-1 text-right">
+                    <label for="chkDay2" class="col-2 text-left">Day 2</label><br />
+                    <input type="checkbox" id="chkDay3" name="chkDay3" value="Day 3" class="col-1 text-right">
+                    <label for="chkDay3" class="col-2 text-left">Day 3</label>
+                </div>
+                <span asp-validation-for="@item.SelectedDays" class="col-5 text-danger"></span>
+            </div><br />
+            <div class="row">
+                <label class="col-3 text-right">Additional<br />Request</label>
+                <textarea class="col-4 form-control" type="text" autocomplete="off" placeholder="" maxlength="100"></textarea>
+                <span asp-validation-for="@item.AddRequest" class="col-5 text-danger"></span>
+            </div><br />
+            <div class="row">
+                <div class="col-12 text-center">
+                    <input class="btn-info" type="submit" value="Save" id="btnSubmit" name="btnSubmit" />
+                    <input class="btn-danger" type="submit" value="Back" id="btnBack" name="btnBack" />
+                </div>
+            </div>
+
+        }
+    </div>
+
+    }
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
